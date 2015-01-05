@@ -17,8 +17,8 @@ The current version of BNS Helpers includes the following:
 
 * Allows Text Widgets to parse shortcode structures
 * Turns on the `dashicons` option in BNS Login (https://wordpress.org/plugins/bns-login) replacing its text output
-* Adds the `[child_pages]` shortcode to provide a list of child-pages of the current page
-* Adds the `[dropdown_child_pages]` shortcode to provide a drop-down list of child-pages of the current page
+* Adds the `[ child_pages ]` shortcode to provide a list of child-pages of the current page
+* Adds the `[ dropdown_child_pages ]` shortcode to provide a drop-down list of child-pages of the current page
 
 == Installation ==
 
@@ -46,9 +46,9 @@ Please read this article for further assistance: http://wpfirstaid.com/2009/12/p
 The shortcodes will work as is without any additional parameters in any page with child-pages.
 For additional details of what parameters are available, please have a look at the following functions:
 
-* `[child_pages]` - https://developer.wordpress.org/reference/functions/wp_list_pages/
-* `[dropdown_child_pages]` - https://developer.wordpress.org/reference/functions/wp_dropdown_pages/
-* `[dropdown_child_pages]` (advanced) - https://developer.wordpress.org/reference/functions/get_pages/
+* `[ child_pages ]` - https://developer.wordpress.org/reference/functions/wp_list_pages/
+* `[ dropdown_child_pages ]` - https://developer.wordpress.org/reference/functions/wp_dropdown_pages/
+* `[ dropdown_child_pages ]` (advanced) - https://developer.wordpress.org/reference/functions/get_pages/
 
 == Frequently Asked Questions ==
 Q: Where can I get support for this plugin?
