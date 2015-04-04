@@ -1,0 +1,46 @@
+/**
+ * This file is part of BNS Helpers plugin
+ * Last revised at version 0.2
+ *
+ * Copyright 2015  Edward Caissie  (email : edward.caissie@gmail.com)
+ *
+ * BNS Helpers is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 2, as published by the
+ * Free Software Foundation.
+ *
+ * You may NOT assume that you can use any other version of the GPL.
+ *
+ * BNS Helpers is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to:
+ *
+ *      Free Software Foundation, Inc.
+ *      51 Franklin St, Fifth Floor
+ *      Boston, MA  02110-1301  USA
+ */
+
+/** Tool Tips - added at version 0.2 */
+.bns-tool-tip {
+	background: black;
+	border-radius: 10px;
+	color: white;
+	cursor: help;
+	font-weight: bold;
+}
+
+.bns-tool-tip-content {
+	background: white;
+	border: 1px black solid;
+	border-radius: 10px;
+	color: black;
+	display: inline-block;
+	font-weight: normal;
+	padding: 5px;
+	max-width: 50%;
+}
+
+/** ------------------------------------------------------------------------- */
