@@ -27,11 +27,22 @@
  *      Free Software Foundation, Inc.
  *      51 Franklin St, Fifth Floor
  *      Boston, MA  02110-1301  USA
+ *
+ * @version    0.2
+ * @date       January 2015
+ * Added "Tool Tip Scripts"
  */
 
 jQuery( document ).ready( function ( $ ) {
 	/** Note: $() will work as an alias for jQuery() inside of this function */
 
-	/** Currently used as a placeholder */
+	/** Tool Tip Scripts */
+	/** passed from `wp_localize_script` */
+	var tool_tip_text;
+
+	$( 'sup.bns-tool-tip' ).tooltip( {
+		content     : tool_tip_text,
+		tooltipClass: 'bns-tool-tip-content'
+	} );
 
 } );

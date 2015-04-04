@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: child-pages, shortcodes, text widgets, bns login, plugin-only
 Requires at least: 3.6
-Tested up to: 4.1
-Stable tag: 0.1
+Tested up to: 4.2
+Stable tag: 0.2
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -19,6 +19,7 @@ The current version of BNS Helpers includes the following:
 * Turns on the `dashicons` option in BNS Login (https://wordpress.org/plugins/bns-login) replacing its text output
 * Adds the `[ child_pages ]` shortcode to provide a list of child-pages of the current page
 * Adds the `[ dropdown_child_pages ]` shortcode to provide a drop-down list of child-pages of the current page
+* Adds the `[ tool_tip ]` shortcode to provide easy hover effect balloon text wrapped by the shortcode
 
 == Installation ==
 
@@ -43,12 +44,15 @@ Please read this article for further assistance: http://wpfirstaid.com/2009/12/p
 ----
 
 = Usage =
-The shortcodes will work as is without any additional parameters in any page with child-pages.
-For additional details of what parameters are available, please have a look at the following functions:
+The "child-pages" shortcodes will work as is without any additional parameters in any page.
+For additional details of what parameters are available, please have a look at the following functions relevant to the shortcode:
 
 * `[ child_pages ]` - https://developer.wordpress.org/reference/functions/wp_list_pages/
 * `[ dropdown_child_pages ]` - https://developer.wordpress.org/reference/functions/wp_dropdown_pages/
 * `[ dropdown_child_pages ]` (advanced) - https://developer.wordpress.org/reference/functions/get_pages/
+
+The `[ tool_tip ]` shortcode has one parameter `character` which is set to an exclamation mark (!) as the default.
+An example usage is: `[ tool_tip character=?]This is the tool tip text![ /tool_tip ]` (with no spaces inside the square brackets)
 
 == Frequently Asked Questions ==
 Q: Where can I get support for this plugin?
@@ -98,6 +102,11 @@ Screenshots were captured using the latest version of Opus Primus (https://wordp
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.2 =
+* Released April 2015
+* Added `[ tool_tip ]` shortcode
+* Minor code clean-up
+
 = 0.1 =
 * Released January 2015
 * Initial Release.

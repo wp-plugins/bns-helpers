@@ -3,7 +3,7 @@
 Plugin Name: BNS Helpers
 Plugin URI: http://buynowshop.com/
 Description: A collections of shortcodes and other helpful functions
-Version: 0.1
+Version: 0.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-helpers
@@ -15,8 +15,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * BNS Helpers
  *
  * @package     BNS_Helpers
- * @version     0.1
- * @date        January 2015
+ * @version     0.2
+ * @date        April 2015
  *
  * @link        http://buynowshop.com/plugins/bns-helpers/
  * @link        https://github.com/Cais/bns-helpers/
@@ -83,27 +83,22 @@ class BNS_Helpers {
 		if ( version_compare( $wp_version, "3.6", "<" ) ) {
 			exit( $exit_message );
 		}
-		/** End if = version compare */
 
 		/** Define some constants to save some keying */
 		if ( ! defined( 'BNS_HELPERS_URL' ) ) {
 			define( 'BNS_HELPERS_URL', plugin_dir_url( __FILE__ ) );
 		}
-		/** End if - not defined */
 		if ( ! defined( 'BNS_HELPERS_PATH' ) ) {
 			define( 'BNS_HELPERS_PATH', plugin_dir_path( __FILE__ ) );
 		}
-		/** End if - not defined */
 
 		/** Define location for BNS plugin customizations */
 		if ( ! defined( 'BNS_CUSTOM_PATH' ) ) {
 			define( 'BNS_CUSTOM_PATH', WP_CONTENT_DIR . '/bns-customs/' );
 		}
-		/** End if - not defined */
 		if ( ! defined( 'BNS_CUSTOM_URL' ) ) {
 			define( 'BNS_CUSTOM_URL', content_url( '/bns-customs/' ) );
 		}
-		/** End if - not defined */
 
 		/** Enqueue Scripts and Styles */
 		add_action( 'wp_enqueue_scripts', array(
@@ -129,7 +124,12 @@ class BNS_Helpers {
 			'dropdown_child_pages_shortcode'
 		) );
 
-	} /** End function - constructor */
+		add_shortcode( 'tool_tip', array(
+			$this,
+			'tool_tip_shortcode'
+		) );
+
+	}
 
 
 	/**
@@ -155,7 +155,13 @@ class BNS_Helpers {
 
 		/** Enqueue Scripts */
 		/** Enqueue toggling script which calls jQuery as a dependency */
-		wp_enqueue_script( 'bns_helpers_script', BNS_HELPERS_URL . 'js/bns-helpers-script.js', array( 'jquery' ), $bns_helpers_data['Version'], true );
+		wp_enqueue_script( 'bns_helpers_script', BNS_HELPERS_URL . 'js/bns-helpers-script.js', array(
+			'jquery',
+			'jquery-ui-widget',
+			'jquery-ui-tooltip',
+			'jquery-ui-position',
+			'jquery-ui-core'
+		), $bns_helpers_data['Version'], true );
 
 		/** Enqueue Style Sheets */
 		wp_enqueue_style( 'BNS-Helpers-Style', BNS_HELPERS_URL . 'css/bns-helpers-style.css', array(), $bns_helpers_data['Version'], 'screen' );
@@ -164,10 +170,8 @@ class BNS_Helpers {
 		if ( is_readable( BNS_CUSTOM_PATH . 'bns-helpers-custom-styles.css' ) ) {
 			wp_enqueue_style( 'BNS-Helpers-Custom-Styles', BNS_CUSTOM_URL . 'bns-helpers-custom-styles.css', array(), $bns_helpers_data['Version'], 'screen' );
 		}
-		/** End if - is readable */
 
 	}
-	/** End function - scripts and styles */
 
 
 	/**
@@ -192,7 +196,6 @@ class BNS_Helpers {
 		return $plugin_data;
 
 	}
-	/** End function - plugin data */
 
 
 	/**
@@ -260,7 +263,6 @@ class BNS_Helpers {
 		return apply_filters( 'bns_helpers_child_pages_shortcode', $output );
 
 	}
-	/** End function - child pages shortcode */
 
 
 	/**
@@ -285,6 +287,8 @@ class BNS_Helpers {
 	 * @param $atts
 	 *
 	 * @return null|string
+	 *
+	 * @todo    Clean up the form $output code?
 	 */
 	function dropdown_child_pages_shortcode( $atts ) {
 
@@ -339,8 +343,56 @@ class BNS_Helpers {
 		return apply_filters( 'bns_helpers_dropdown_child_pages_shortcode', $output );
 
 	}
-	/** End function - child pages shortcode */
 
+
+	/**
+	 * Tool Tip Shortcode
+	 *
+	 * Produces a tool-tip shortcode useful for any number of ideas using the
+	 * default of an exclamation mark ( ! ) as the reference point.
+	 *
+	 * @package BNS_Helpers
+	 * @since   0.2
+	 *
+	 * @uses    apply_filters
+	 * @uses    esc_attr
+	 * @uses    esc_html
+	 * @uses    shortcode_atts
+	 * @uses    wp_localize_script
+	 *
+	 * @param      $atts
+	 * @param null $content
+	 *
+	 * @return mixed|void
+	 */
+	function tool_tip_shortcode( $atts, $content = null ) {
+
+		/** @var array $defaults - optional arguments as shortcode parameters */
+		$defaults = shortcode_atts( array(
+			'character' => '!'
+		), $atts, 'tool_tip' );
+
+		/** Sanity check - no content no reason to create any output */
+		if ( ! empty( $content ) ) {
+
+			/** @var string $content - make sure the content is sanitized */
+			$content = esc_attr( $content );
+
+			/** Pass the $content to the `bns_helpers_script` JavaScript */
+			wp_localize_script( 'bns_helpers_script', 'tool_tip_text', $content );
+
+			/** @var string $tool_tip_output - create the output */
+			$tool_tip_output = '<sup class="bns-tool-tip" title="' . $content . '">&nbsp;' . esc_html( $defaults['character'] ) . '&nbsp;</sup>';
+
+		} else {
+
+			$tool_tip_output = null;
+
+		}
+
+		return apply_filters( 'bns_helpers_tool_tip_output', $tool_tip_output );
+
+	}
 
 }
 
@@ -407,12 +459,10 @@ function BNS_Helpers_in_plugin_update_message( $args ) {
 						if ( $ul ) {
 							$upgrade_notice .= '</ul><div style="clear: left;"></div>';
 						}
-						/** End if - unordered list created */
 
 						$upgrade_notice .= '<hr/>';
 
 					}
-					/** End if - non-blank line */
 
 					/** @var string $return_value - body of message */
 					$return_value = '';
@@ -437,36 +487,27 @@ function BNS_Helpers_in_plugin_update_message( $args ) {
 						} else {
 							$return_value .= '<p>' . $line . '</p>';
 						}
-						/** End if - unordered list started */
 
 					}
-					/** End if - non-blank line */
 
 					$upgrade_notice .= wp_kses_post( preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $return_value ) );
 
 				}
-				/** End foreach - line parsing */
 
 				$upgrade_notice .= '</div>';
 
 			}
-			/** End if - version compare */
 
 		}
-		/** End if - response message exists */
 
 		/** Set transient - minimize calls to WordPress to once a day */
 		set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
 
 	}
-	/** End if - transient check */
 
 	echo $upgrade_notice;
 
 }
-
-/** End function - in plugin update message */
-
 
 /** Add Plugin Update Message */
 add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), 'BNS_Helpers_in_plugin_update_message' );
