@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: child-pages, shortcodes, text widgets, bns login, plugin-only
 Requires at least: 3.6
 Tested up to: 4.2
-Stable tag: 0.2
+Stable tag: 0.3
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -102,6 +102,10 @@ Screenshots were captured using the latest version of Opus Primus (https://wordp
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.3 =
+* Released 2015
+* Provide (temporary?) support against stored XSS issue with too long comments
+
 = 0.2 =
 * Released April 2015
 * Added `[ tool_tip ]` shortcode

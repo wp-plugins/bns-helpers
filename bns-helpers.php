@@ -3,7 +3,7 @@
 Plugin Name: BNS Helpers
 Plugin URI: http://buynowshop.com/
 Description: A collections of shortcodes and other helpful functions
-Version: 0.2
+Version: 0.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-helpers
@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * BNS Helpers
  *
  * @package     BNS_Helpers
- * @version     0.2
+ * @version     0.3
  * @date        April 2015
  *
  * @link        http://buynowshop.com/plugins/bns-helpers/
@@ -112,6 +112,12 @@ class BNS_Helpers {
 		/** Add support for BNS Login use of dashicons */
 		add_filter( 'bns_login_dashed_set', '__return_true' );
 
+		/** Provide (temporary?) support against stored XSS issue with too long comments */
+		add_filter( 'preprocess_comment', array(
+			$this,
+			'stop_over_sized_comments'
+		) );
+
 		/** Add Child Pages Shortcode */
 		add_shortcode( 'child_pages', array(
 			$this,
@@ -124,6 +130,7 @@ class BNS_Helpers {
 			'dropdown_child_pages_shortcode'
 		) );
 
+		/** Add Tool-Tip Shortcode */
 		add_shortcode( 'tool_tip', array(
 			$this,
 			'tool_tip_shortcode'
@@ -393,6 +400,35 @@ class BNS_Helpers {
 		return apply_filters( 'bns_helpers_tool_tip_output', $tool_tip_output );
 
 	}
+
+
+	/**
+	 * Stop Over Sized Comments
+	 *
+	 * Just in case, if the comment exceeds 5000 characters we're not going to
+	 * allow it as a preventative measure for a stored XSS vulnerability
+	 *
+	 * @link    http://klikki.fi/adv/wordpress2.html
+	 *
+	 * @package BNS_Helpers
+	 * @since   0.3
+	 *
+	 * @uses    wp_die
+	 *
+	 * @param $comment
+	 *
+	 * @return mixed
+	 */
+	function stop_over_sized_comments( $comment ) {
+
+		if ( strlen( $comment['comment_content'] ) > 5000 ) {
+			wp_die( __( 'Comment is too long.', 'bns-helpers' ) );
+		}
+
+		return $comment;
+
+	}
+
 
 }
 
